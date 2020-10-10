@@ -22,6 +22,9 @@ public class GP_Bell : MonoBehaviour
     bool done = false;
 
     int stepsdone = 0;
+    int fixdone = 0;
+    int hammerdone = 0;
+    int cleandone = 0;
 
     void Update()
     {
@@ -106,13 +109,14 @@ public class GP_Bell : MonoBehaviour
                 {
                     if (_hit.transform.tag == heldObject)
                     {
-                        if(heldObject == "Clean")
                         _hit.transform.GetComponent<MeshRenderer>().enabled = false;
                         _hit.transform.GetComponent<Collider>().enabled = false;
                         _hit.transform.GetChild(0).gameObject.SetActive(true);
                         if (uiSelected) uiSelected.SetActive(false);
                         heldObject = "";
                         stepsdone++;
+                        fixdone++;
+                        if (fixdone == 3) GP_Note.I.AddPage(PageType.Info);
                     }
                     else
                     {
@@ -151,6 +155,8 @@ public class GP_Bell : MonoBehaviour
                             _hit.transform.GetComponent<Collider>().enabled = false;
                             _hit.transform.GetChild(0).gameObject.SetActive(true);
                             stepsdone++;
+                            cleandone++;
+                            if (cleandone == 3) GP_Note.I.AddPage(PageType.Blason);
                         }
                         if (uiSelected) uiSelected.SetActive(false);
                         heldObject = "";
@@ -185,6 +191,8 @@ public class GP_Bell : MonoBehaviour
                         _hit.transform.GetChild(0).gameObject.SetActive(true);
                         if (uiSelected) uiSelected.SetActive(false);
                         stepsdone++;
+                        hammerdone++;
+                        if (hammerdone == 3) GP_Note.I.AddPage(PageType.Son);
                     }
                 }
             }

@@ -5,9 +5,11 @@ using UnityEngine;
 public class GP_GameManager : MonoBehaviour
 {
     public static GP_GameManager I { get; private set; }
-    public bool IsPlay = false;
+    public bool IsPlay { get; private set; } = false;
 
     [SerializeField] Locations correctLocation = Locations.a;
+
+    public int Bell { get; private set; } = 0;
 
 
     private void Awake()
@@ -15,6 +17,11 @@ public class GP_GameManager : MonoBehaviour
         IsPlay = true;
         Cursor.lockState = CursorLockMode.Locked;
         I = this;
+    }
+
+    private void Start()
+    {
+        Bell = Random.Range(0, 3);
     }
 
     public void ChooseMap(string _l)
