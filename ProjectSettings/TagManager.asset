@@ -7,6 +7,12 @@ TagManager:
   - Bell
   - Note
   - Map
+  - Left
+  - Middle
+  - Right
+  - Dirty
+  - Clean
+  - Hammer
   layers:
   - Default
   - TransparentFX
@@ -18,7 +24,7 @@ TagManager:
   - 
   - Interactables
   - RotateArea
-  - 
+  - BellSteps
   - 
   - 
   - 

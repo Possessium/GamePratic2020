@@ -13,13 +13,10 @@ public class GP_Camera : MonoBehaviour
     [SerializeField] GameObject map = null;
 
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
     private void Update()
     {
+        if (!GP_GameManager.I.IsPlay) return;
         if (currentCamstate == CameraState.Free) Free();
     }
 
@@ -53,6 +50,7 @@ public class GP_Camera : MonoBehaviour
                         break;
                     case "Bell":
                     ChangeState(CameraState.Bell);
+                    transform.eulerAngles = new Vector3(30, 0, 0);
                     bell.SetActive(true);
                         break;
                     case "Map":

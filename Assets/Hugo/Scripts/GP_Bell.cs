@@ -11,59 +11,184 @@ public class GP_Bell : MonoBehaviour
 
     [SerializeField] GameObject fix = null;
     [SerializeField] GameObject clean = null;
-    [SerializeField] GameObject polish = null;
+    [SerializeField] GameObject hammer = null;
 
-    #region Fix
-    [SerializeField] GameObject heldObject = null;
+    [SerializeField] string heldObject = "";
+    [SerializeField] GameObject uiSelected = null;
+    [SerializeField] LayerMask bellStepsLayer = 0;
 
-    [SerializeField] LayerMask pieceLayer = 0;
-    #endregion
+    [SerializeField] List<GameObject> uis = new List<GameObject>();
+
+    bool done = false;
+
+    int stepsdone = 0;
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, rotateAreaLayer))
+        if (!GP_GameManager.I.IsPlay) return;
+        done = stepsdone == 9;
+        if (Input.GetKey(KeyCode.Mouse1) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, rotateAreaLayer))
         {
-            if(bell)
+            if (bell)
             {
-                    bell.transform.RotateAround(bell.transform.position, new Vector3(Input.GetAxis("Mouse Y"), -Input.GetAxis("Mouse X"), 0), 2);
+                bell.transform.RotateAround(bell.transform.position, new Vector3(Input.GetAxis("Mouse Y"), -Input.GetAxis("Mouse X"), 0), 2);
             }
         }
-        switch (currentState)
+        if (done)
         {
-            case BellState.Fix:
-                Fix();
-                break;
-            case BellState.Clean:
-                Clean();
-                break;
-            case BellState.Polish:
-                Polish();
-                break;
-            default:
-                break;
+            uis.ForEach(_ui => _ui.SetActive(false));
         }
+        else
+        {
+            switch (currentState)
+            {
+                case BellState.Fix:
+                    Fix();
+                    break;
+                case BellState.Clean:
+                    Clean();
+                    break;
+                case BellState.Hammer:
+                    Hammer();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void ChangeStep(string _s)
+    {
+        if(_s == "Fix")
+        {
+            currentState = BellState.Fix;
+            clean.SetActive(false);
+            hammer.SetActive(false);
+            fix.SetActive(true);
+        }
+        else if(_s == "Clean")
+        {
+            currentState = BellState.Clean;
+            clean.SetActive(true);
+            hammer.SetActive(false);
+            fix.SetActive(false);
+        }
+        else if (_s == "Hammer")
+        {
+            heldObject = "Hammer";
+            currentState = BellState.Hammer;
+            clean.SetActive(false);
+            hammer.SetActive(true);
+            fix.SetActive(false);
+        }
+    }
+
+    public void GrabObject(string _obj)
+    {
+        heldObject = _obj;
+    }
+
+    public void GrabUI(GameObject _go)
+    {
+        if (uiSelected) uiSelected.SetActive(false);
+        _go.SetActive(true);
+        uiSelected = _go;
     }
 
     void Fix()
     {
-        /*
-         * cast on Key sur layer piece
-         *      follow piece de la souris
-         * 
-         * cast on KeyUp sur layer hole
-         *      reset piece si pas bon tags
-         *      fix si bon tags
-         */
+        if (!string.IsNullOrEmpty(heldObject))
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                RaycastHit _hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, Mathf.Infinity, bellStepsLayer))
+                {
+                    if (_hit.transform.tag == heldObject)
+                    {
+                        if(heldObject == "Clean")
+                        _hit.transform.GetComponent<MeshRenderer>().enabled = false;
+                        _hit.transform.GetComponent<Collider>().enabled = false;
+                        _hit.transform.GetChild(0).gameObject.SetActive(true);
+                        if (uiSelected) uiSelected.SetActive(false);
+                        heldObject = "";
+                        stepsdone++;
+                    }
+                    else
+                    {
+                        if (uiSelected) uiSelected.SetActive(false);
+                        heldObject = "";
+                    }
+                }
+                else
+                {
+                    if (uiSelected) uiSelected.SetActive(false);
+                    heldObject = "";
+                }
+            }
+        }
     }
+
 
     void Clean()
     {
-
+        if (!string.IsNullOrEmpty(heldObject))
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                RaycastHit _hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, Mathf.Infinity, bellStepsLayer))
+                {
+                    if (_hit.transform.tag == heldObject)
+                    {
+                        if(heldObject == "Dirty")
+                        {
+                            _hit.transform.tag = "Clean";
+                        }
+                        else
+                        {
+                            _hit.transform.GetComponent<MeshRenderer>().enabled = false;
+                            _hit.transform.GetComponent<Collider>().enabled = false;
+                            _hit.transform.GetChild(0).gameObject.SetActive(true);
+                            stepsdone++;
+                        }
+                        if (uiSelected) uiSelected.SetActive(false);
+                        heldObject = "";
+                    }
+                    else
+                    {
+                        if (uiSelected) uiSelected.SetActive(false);
+                        heldObject = "";
+                    }
+                }
+                else
+                {
+                    if (uiSelected) uiSelected.SetActive(false);
+                    heldObject = "";
+                }
+            }
+        }
     }
 
-    void Polish()
+    void Hammer()
     {
-
+        if (!string.IsNullOrEmpty(heldObject))
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                RaycastHit _hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, Mathf.Infinity, bellStepsLayer))
+                {
+                    if (_hit.transform.tag == heldObject)
+                    {
+                        _hit.transform.GetComponent<Collider>().enabled = false;
+                        _hit.transform.GetChild(0).gameObject.SetActive(true);
+                        if (uiSelected) uiSelected.SetActive(false);
+                        stepsdone++;
+                    }
+                }
+            }
+        }
     }
 
 
@@ -73,5 +198,5 @@ enum BellState
 {
     Fix,
     Clean,
-    Polish
+    Hammer
 }
