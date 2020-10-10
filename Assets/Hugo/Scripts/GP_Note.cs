@@ -29,6 +29,7 @@ public class GP_Note : MonoBehaviour
         {
             noteObject.transform.GetChild(i).gameObject.SetActive(i == index);
             noteObject.transform.GetChild(i).GetComponent<RectTransform>().localScale = Vector3.one;
+            noteObject.transform.GetChild(i).GetComponent<RectTransform>().localPosition = Vector3.zero;
         }
     }
 

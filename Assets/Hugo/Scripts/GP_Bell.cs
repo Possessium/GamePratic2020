@@ -8,6 +8,7 @@ public class GP_Bell : MonoBehaviour
 
     [SerializeField] LayerMask rotateAreaLayer = 0;
     [SerializeField] GameObject bell = null;
+    public GameObject Bell { get { return bell; } }
 
     [SerializeField] GameObject fix = null;
     [SerializeField] GameObject clean = null;
@@ -19,17 +20,24 @@ public class GP_Bell : MonoBehaviour
 
     [SerializeField] List<GameObject> uis = new List<GameObject>();
 
+    [SerializeField] UnityEngine.UI.Button backButton = null;
+
     bool done = false;
 
-    int stepsdone = 0;
+    public int Stepsdone { get; private set; } = 0;
     int fixdone = 0;
     int hammerdone = 0;
     int cleandone = 0;
 
+    private void Start()
+    {
+        backButton.onClick.AddListener(GP_Camera.I.ChangeToFree);
+    }
+
     void Update()
     {
         if (!GP_GameManager.I.IsPlay) return;
-        done = stepsdone == 9;
+        done = Stepsdone == 9;
         if (Input.GetKey(KeyCode.Mouse1) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, rotateAreaLayer))
         {
             if (bell)
@@ -98,6 +106,8 @@ public class GP_Bell : MonoBehaviour
         uiSelected = _go;
     }
 
+
+
     void Fix()
     {
         if (!string.IsNullOrEmpty(heldObject))
@@ -114,7 +124,7 @@ public class GP_Bell : MonoBehaviour
                         _hit.transform.GetChild(0).gameObject.SetActive(true);
                         if (uiSelected) uiSelected.SetActive(false);
                         heldObject = "";
-                        stepsdone++;
+                        Stepsdone++;
                         fixdone++;
                         if (fixdone == 3) GP_Note.I.AddPage(PageType.Info);
                     }
@@ -154,7 +164,7 @@ public class GP_Bell : MonoBehaviour
                             _hit.transform.GetComponent<MeshRenderer>().enabled = false;
                             _hit.transform.GetComponent<Collider>().enabled = false;
                             _hit.transform.GetChild(0).gameObject.SetActive(true);
-                            stepsdone++;
+                            Stepsdone++;
                             cleandone++;
                             if (cleandone == 3) GP_Note.I.AddPage(PageType.Blason);
                         }
@@ -190,7 +200,7 @@ public class GP_Bell : MonoBehaviour
                         _hit.transform.GetComponent<Collider>().enabled = false;
                         _hit.transform.GetChild(0).gameObject.SetActive(true);
                         if (uiSelected) uiSelected.SetActive(false);
-                        stepsdone++;
+                        Stepsdone++;
                         hammerdone++;
                         if (hammerdone == 3) GP_Note.I.AddPage(PageType.Son);
                     }
