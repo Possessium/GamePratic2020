@@ -19,7 +19,10 @@ public class GP_GameManager : MonoBehaviour
 
     public GameObject SelectedBell { get; private set; } = null;
 
+    [SerializeField] Transform spawnBell = null;
     public int Bell { get; private set; } = 0;
+
+    [SerializeField] List<GameObject> fion = new List<GameObject>();
 
     bool won = false;
 
@@ -46,7 +49,7 @@ public class GP_GameManager : MonoBehaviour
         int _key = PlayerPrefs.GetInt("BellsDone");
         if(_key == 3) Bell = Random.Range(0, 3);
         else Bell = PlayerPrefs.GetInt("BellsDone");
-        SelectedBell = Instantiate(allBells[Bell], new Vector3(0, 1, 0), Quaternion.identity);
+        SelectedBell = Instantiate(allBells[Bell], spawnBell.position, Quaternion.identity);
         correctLocation = (Locations)Bell;
         Cursor.lockState = CursorLockMode.Locked;
         IsPlay = true;
@@ -86,12 +89,13 @@ public class GP_GameManager : MonoBehaviour
 
     void Win()
     {
+        fion[(int)correctLocation].SetActive(true);
         GP_SoundManager.I.Playdialogue(correctLocation == Locations.ALBI ? SoundsDialogue.doneAlbi : correctLocation == Locations.MTP ? SoundsDialogue.doneMTP : SoundsDialogue.doneLourdes);
         if(PlayerPrefs.GetInt("BellsDone") < 3) PlayerPrefs.SetInt("BellsDone", Bell+1);
         endUI.SetActive(true);
         won = true;
         IsPlay = false;
-        Camera.main.transform.eulerAngles = new Vector3(30, 0, 0);
+        Camera.main.transform.eulerAngles = new Vector3(15, 0, 0);
         GP_Camera.I.ChangeState(CameraState.Free);
         Cursor.lockState = CursorLockMode.None;
     }

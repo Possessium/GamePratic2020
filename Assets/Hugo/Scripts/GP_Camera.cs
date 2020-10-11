@@ -14,6 +14,8 @@ public class GP_Camera : MonoBehaviour
     [SerializeField] GameObject note = null;
     [SerializeField] GameObject map = null;
 
+    [SerializeField] GameObject cursor = null;
+
 
     private void Awake()
     {
@@ -38,19 +40,31 @@ public class GP_Camera : MonoBehaviour
         note.SetActive(false);
         bell.SetActive(false);
         map.SetActive(false);
-        transform.eulerAngles = new Vector3(30, 0, 0);
-        if (_state == CameraState.Free) Cursor.lockState = CursorLockMode.Locked;
-        else Cursor.lockState = CursorLockMode.None;
+        transform.eulerAngles = new Vector3(15, 0, 0);
+        if (_state == CameraState.Free)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            cursor.SetActive(true);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            cursor.SetActive(false);
+        }
         currentCamstate = _state;
     }
 
     void Free()
     {
+        Cursor.visible = false;
+        cursor.SetActive(true);
         if (!bell || !note || !map) return;
         float _y = transform.eulerAngles.y + Input.GetAxis("Mouse X");
         float _x = transform.eulerAngles.x - Input.GetAxis("Mouse Y");
 
-        transform.eulerAngles = new Vector3(Mathf.Clamp(_x, 10, 50), _y, 0);
+        transform.eulerAngles = new Vector3(Mathf.Clamp(_x, 0, 80), _y, 0);
 
         RaycastHit _hit;
         if(Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, Mathf.Infinity, interactableLayer))
@@ -63,7 +77,7 @@ public class GP_Camera : MonoBehaviour
                         break;
                     case "Bell":
                     ChangeState(CameraState.Bell);
-                    transform.eulerAngles = new Vector3(30, 0, 0);
+                    transform.eulerAngles = new Vector3(15, 0, 0);
                     bell.SetActive(true);
                         break;
                     case "Map":
