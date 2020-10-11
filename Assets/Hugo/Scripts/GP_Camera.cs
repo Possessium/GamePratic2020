@@ -38,11 +38,7 @@ public class GP_Camera : MonoBehaviour
         note.SetActive(false);
         bell.SetActive(false);
         map.SetActive(false);
-        if (_state == CameraState.Bell)
-        {
-            transform.eulerAngles = new Vector3(30, 0, 0);
-            bell.SetActive(true);
-        }
+        transform.eulerAngles = new Vector3(30, 0, 0);
         if (_state == CameraState.Free) Cursor.lockState = CursorLockMode.Locked;
         else Cursor.lockState = CursorLockMode.None;
         currentCamstate = _state;

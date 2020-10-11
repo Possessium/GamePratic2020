@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class GP_BellGuider : MonoBehaviour
 {
-    [SerializeField] GameObject bell;
+    [SerializeField] GameObject bell = null;
     public GameObject Bell { get { return bell; } }
 }

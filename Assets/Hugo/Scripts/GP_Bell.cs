@@ -126,7 +126,11 @@ public class GP_Bell : MonoBehaviour
                         heldObject = "";
                         Stepsdone++;
                         fixdone++;
-                        if (fixdone == 3) GP_Note.I.AddPage(PageType.Info);
+                        if (fixdone == 3)
+                        {
+                            GP_SoundManager.I.Playdialogue(GP_GameManager.I.Bell == 0 ? SoundsDialogue.infoMTP : GP_GameManager.I.Bell == 1 ? SoundsDialogue.infoLourdes : SoundsDialogue.infoAlbi);
+                            GP_Note.I.AddPage(PageType.Info);
+                        }
                     }
                     else
                     {
@@ -166,7 +170,11 @@ public class GP_Bell : MonoBehaviour
                             _hit.transform.GetChild(0).gameObject.SetActive(true);
                             Stepsdone++;
                             cleandone++;
-                            if (cleandone == 3) GP_Note.I.AddPage(PageType.Blason);
+                            if (cleandone == 3)
+                            {
+                                GP_SoundManager.I.Playdialogue(GP_GameManager.I.Bell == 0 ? SoundsDialogue.blasonMTP : GP_GameManager.I.Bell == 1 ? SoundsDialogue.blasonLourdes : SoundsDialogue.blasonAlbi);
+                                GP_Note.I.AddPage(PageType.Blason);
+                            }
                         }
                         if (uiSelected) uiSelected.SetActive(false);
                         heldObject = "";
@@ -202,7 +210,11 @@ public class GP_Bell : MonoBehaviour
                         if (uiSelected) uiSelected.SetActive(false);
                         Stepsdone++;
                         hammerdone++;
-                        if (hammerdone == 3) GP_Note.I.AddPage(PageType.Son);
+                        if (hammerdone == 3)
+                        {
+                            GP_SoundManager.I.Playdialogue(GP_GameManager.I.Bell == 0 ? SoundsDialogue.sonMTP : GP_GameManager.I.Bell == 1 ? SoundsDialogue.sonLourdes : SoundsDialogue.sonAlbi);
+                            GP_Note.I.AddPage(PageType.Son);
+                        }
                     }
                 }
             }

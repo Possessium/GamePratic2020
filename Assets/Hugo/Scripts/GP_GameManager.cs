@@ -44,7 +44,6 @@ public class GP_GameManager : MonoBehaviour
     {
         startUI.SetActive(false);
         int _key = PlayerPrefs.GetInt("BellsDone");
-        Debug.Log(_key);
         if(_key == 3) Bell = Random.Range(0, 3);
         else Bell = PlayerPrefs.GetInt("BellsDone");
         SelectedBell = Instantiate(allBells[Bell], new Vector3(0, 1, 0), Quaternion.identity);
@@ -87,6 +86,7 @@ public class GP_GameManager : MonoBehaviour
 
     void Win()
     {
+        GP_SoundManager.I.Playdialogue(correctLocation == Locations.ALBI ? SoundsDialogue.doneAlbi : correctLocation == Locations.MTP ? SoundsDialogue.doneMTP : SoundsDialogue.doneLourdes);
         if(PlayerPrefs.GetInt("BellsDone") < 3) PlayerPrefs.SetInt("BellsDone", Bell+1);
         endUI.SetActive(true);
         won = true;
