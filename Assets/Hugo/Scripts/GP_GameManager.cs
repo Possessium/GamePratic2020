@@ -44,8 +44,9 @@ public class GP_GameManager : MonoBehaviour
     {
         startUI.SetActive(false);
         int _key = PlayerPrefs.GetInt("BellsDone");
-        if(_key == 2) Bell = Random.Range(0, 3);
-        else Bell = PlayerPrefs.GetInt("BellsDone")+1;
+        Debug.Log(_key);
+        if(_key == 3) Bell = Random.Range(0, 3);
+        else Bell = PlayerPrefs.GetInt("BellsDone");
         SelectedBell = Instantiate(allBells[Bell], new Vector3(0, 1, 0), Quaternion.identity);
         correctLocation = (Locations)Bell;
         Cursor.lockState = CursorLockMode.Locked;
@@ -86,7 +87,7 @@ public class GP_GameManager : MonoBehaviour
 
     void Win()
     {
-        if(PlayerPrefs.GetInt("BellsDone") < 2) PlayerPrefs.SetInt("BellsDone", Bell);
+        if(PlayerPrefs.GetInt("BellsDone") < 3) PlayerPrefs.SetInt("BellsDone", Bell+1);
         endUI.SetActive(true);
         won = true;
         IsPlay = false;
