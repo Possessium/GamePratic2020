@@ -32,7 +32,12 @@ public class GP_Camera : MonoBehaviour
         if (currentCamstate == CameraState.Free) Free();
     }
 
-    public void ChangeToFree() => ChangeState(CameraState.Free);
+    public void ChangeToFree()
+    {
+        Debug.Log(bell.name);
+        bell.transform.parent.transform.eulerAngles = Vector3.zero;
+        ChangeState(CameraState.Free);
+    }
 
     public void ChangeState(CameraState _state)
     {

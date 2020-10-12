@@ -22,6 +22,8 @@ public class GP_GameManager : MonoBehaviour
     [SerializeField] Transform spawnBell = null;
     public int Bell { get; private set; } = 0;
 
+    [SerializeField] GameObject cursor = null;
+
     [SerializeField] List<GameObject> fion = new List<GameObject>();
 
     bool won = false;
@@ -95,9 +97,11 @@ public class GP_GameManager : MonoBehaviour
         endUI.SetActive(true);
         won = true;
         IsPlay = false;
-        Camera.main.transform.eulerAngles = new Vector3(15, 0, 0);
         GP_Camera.I.ChangeState(CameraState.Free);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Camera.main.transform.eulerAngles = new Vector3(18, 13, 0); 
+        cursor.SetActive(false);
     }
 
     public void Restart() => UnityEngine.SceneManagement.SceneManager.LoadScene(0);
