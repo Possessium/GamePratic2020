@@ -58,13 +58,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8042454528652987898, guid: 723980316a0d6134c834948a6b5e87d1,
+  m_Sprite: {fileID: 6782031995087273274, guid: dcd0b6a168ca7264795b5c1989bf398c,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -514,13 +514,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8042454528652987898, guid: 723980316a0d6134c834948a6b5e87d1,
+  m_Sprite: {fileID: 3378538491652598294, guid: dcd0b6a168ca7264795b5c1989bf398c,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1632,6 +1632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 1
+  cleanstepMat: {fileID: 2100000, guid: 40abd2ea735f2c74f95ba4761500a51a, type: 2}
   rotateAreaLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -4242,13 +4243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8042454528652987898, guid: 723980316a0d6134c834948a6b5e87d1,
+  m_Sprite: {fileID: -5221343188550696483, guid: dcd0b6a168ca7264795b5c1989bf398c,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0

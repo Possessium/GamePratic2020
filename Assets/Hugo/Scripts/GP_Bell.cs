@@ -6,6 +6,8 @@ public class GP_Bell : MonoBehaviour
 {
     [SerializeField] BellState currentState = BellState.Fix;
 
+    [SerializeField] Material cleanstepMat = null;
+
     [SerializeField] LayerMask rotateAreaLayer = 0;
     [SerializeField] GameObject bell = null;
     public GameObject Bell { get { return bell; } }
@@ -195,6 +197,7 @@ public class GP_Bell : MonoBehaviour
                     {
                         if(heldObject == "Dirty")
                         {
+                            _hit.transform.GetComponent<MeshRenderer>().material = cleanstepMat;
                             _hit.transform.tag = "Clean";
                         }
                         else
