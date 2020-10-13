@@ -24,7 +24,7 @@ public class GP_SoundManager : MonoBehaviour
     [SerializeField] AudioClip infoLourdes = null;
     [SerializeField] AudioClip doneLourdes = null;
 
-
+    [SerializeField] AudioClip bell = null;
 
     private void Awake()
     {
@@ -79,9 +79,11 @@ public class GP_SoundManager : MonoBehaviour
         dialogue.Play();
     }
 
-    public void PlaySound(Sounds _s)
+    public void PlaySound()
     {
-
+        if (sound.isPlaying) sound.Stop();
+        sound.clip = bell;
+        sound.Play();
     }
 
 

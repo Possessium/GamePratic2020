@@ -250,6 +250,7 @@ public class GP_Bell : MonoBehaviour
                         if (uiSelected) uiSelected.SetActive(false);
                         Stepsdone++;
                         hammerdone++;
+                        GP_SoundManager.I.PlaySound();
                         if (hammerdone == 3)
                         {
                             hammered = true;
